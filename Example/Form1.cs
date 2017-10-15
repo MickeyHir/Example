@@ -12,8 +12,8 @@ namespace Example
 {
     public partial class Form1 : Form
     {
-        static int row = 71;
-        static int colomn = 101;
+        static int row = 31;
+        static int colomn = 61;
         int size = 10;
         int[,] Labirinth = new int[row, colomn];
         Random rnd = new Random();
@@ -21,23 +21,25 @@ namespace Example
         public Form1()
         {
             InitializeComponent();
+            this.Update();
         }
 
         public void Drawing()
         {
-            pan = this.CreateGraphics();
-            for (int i = 0; i < row; ++i)
-                for (int j = 0; j < colomn; ++j)
-                {
-                    if (Labirinth[i, j] == 0)
-                    {
-                        pan.FillRectangle(Brushes.White, 20 + j * size + 10 * size, 20 + i * size, size, size);
-                    }
-                    if (Labirinth[i, j] == 1)
-                    {
-                        pan.FillRectangle(Brushes.Blue, 20 + j * size + 10 * size, 20 + i * size, size, size);
-                    }
-                }
+             pan = pictureBox1.CreateGraphics();
+             for (int i = 0; i < row; ++i)
+                 for (int j = 0; j < colomn; ++j)
+                 {
+                     if (Labirinth[i, j] == 0)
+                     {
+                         pan.FillRectangle(Brushes.White, 20 + j * size + 10 * size, 20 + i * size, size, size);
+                     }
+                     else
+                     {
+                         pan.FillRectangle(Brushes.Blue, 20 + j * size + 10 * size, 20 + i * size, size, size);
+                     }
+                 }
+             
         }
         public void Generate_default_walls()
         {
@@ -144,6 +146,11 @@ namespace Example
             Generate_default_walls();
             Fix_circles();
             Drawing();
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+             Drawing();
         }
     }
 }
