@@ -17,29 +17,30 @@ namespace Example
         int size = 10;
         int[,] Labirinth = new int[row, colomn];
         Random rnd = new Random();
-        Graphics pan;
         public Form1()
         {
             InitializeComponent();
-            this.Update();
         }
 
         public void Drawing()
         {
-             pan = pictureBox1.CreateGraphics();
-             for (int i = 0; i < row; ++i)
+            Bitmap bmp = new Bitmap(10*size+colomn*size, 20+row*size);
+            Graphics pan = Graphics.FromImage(bmp);
+            for (int i = 0; i < row; ++i)
                  for (int j = 0; j < colomn; ++j)
                  {
                      if (Labirinth[i, j] == 0)
                      {
-                         pan.FillRectangle(Brushes.White, 20 + j * size + 10 * size, 20 + i * size, size, size);
+                         pan.FillRectangle(Brushes.White, 10 * size + j * size, 20 + i * size, size, size);
                      }
                      else
                      {
-                         pan.FillRectangle(Brushes.Blue, 20 + j * size + 10 * size, 20 + i * size, size, size);
+                         pan.FillRectangle(Brushes.Blue,  10 * size + j * size, 20 + i * size, size, size);
                      }
                  }
-             
+            pan.Dispose();
+            pictureBox1.Image = (Image)bmp;
+            bmp=null;
         }
         public void Generate_default_walls()
         {
@@ -139,18 +140,12 @@ namespace Example
                 }
             }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             Clearing();
             Generate_default_walls();
             Fix_circles();
             Drawing();
-        }
-
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-             Drawing();
         }
     }
 }
